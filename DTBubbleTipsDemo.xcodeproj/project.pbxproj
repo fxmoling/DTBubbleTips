@@ -20,6 +20,7 @@
 		00019C862869568D002DF8BB /* DTBubbleTipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00019C852869568D002DF8BB /* DTBubbleTipsView.m */; };
 		00019C892869569A002DF8BB /* DTBubbleTipsConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 00019C882869569A002DF8BB /* DTBubbleTipsConfig.m */; };
 		00019C8C286956C5002DF8BB /* DTBubbleTipsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 00019C8B286956C5002DF8BB /* DTBubbleTipsHelper.m */; };
+		003B3EAD290778BB00828B77 /* DTBubbleTipsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 003B3EAC290778BB00828B77 /* DTBubbleTipsWindow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,8 @@
 		00019C882869569A002DF8BB /* DTBubbleTipsConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsConfig.m; sourceTree = "<group>"; };
 		00019C8A286956C5002DF8BB /* DTBubbleTipsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTBubbleTipsHelper.h; sourceTree = "<group>"; };
 		00019C8B286956C5002DF8BB /* DTBubbleTipsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsHelper.m; sourceTree = "<group>"; };
+		003B3EAB290778BB00828B77 /* DTBubbleTipsWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTBubbleTipsWindow.h; sourceTree = "<group>"; };
+		003B3EAC290778BB00828B77 /* DTBubbleTipsWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsWindow.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +158,8 @@
 				00019C882869569A002DF8BB /* DTBubbleTipsConfig.m */,
 				00019C8A286956C5002DF8BB /* DTBubbleTipsHelper.h */,
 				00019C8B286956C5002DF8BB /* DTBubbleTipsHelper.m */,
+				003B3EAB290778BB00828B77 /* DTBubbleTipsWindow.h */,
+				003B3EAC290778BB00828B77 /* DTBubbleTipsWindow.m */,
 			);
 			path = DTBubbleTips;
 			sourceTree = "<group>";
@@ -292,6 +297,7 @@
 				00019C54286954AC002DF8BB /* ViewController.m in Sources */,
 				00019C892869569A002DF8BB /* DTBubbleTipsConfig.m in Sources */,
 				00019C4E286954AC002DF8BB /* AppDelegate.m in Sources */,
+				003B3EAD290778BB00828B77 /* DTBubbleTipsWindow.m in Sources */,
 				00019C862869568D002DF8BB /* DTBubbleTipsView.m in Sources */,
 				00019C5F286954AE002DF8BB /* main.m in Sources */,
 				00019C51286954AC002DF8BB /* SceneDelegate.m in Sources */,

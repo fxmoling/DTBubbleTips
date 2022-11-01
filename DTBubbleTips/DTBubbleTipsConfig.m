@@ -14,17 +14,36 @@
     _textColor = UIColor.whiteColor;
     _triangleColor = UIColor.blackColor;
     _boardColor = UIColor.blackColor;
+    
+    _triangleOffset = 0.5;
+    _marginForLabel = UIEdgeInsetsMake(8, 8, 8, 8);
+    _font = [UIFont systemFontOfSize:14];
+    
+    _triangleSize = CGSizeMake(12, 6);
+    _boardCornerRadius = 4;
+    
+    _textColor = UIColor.whiteColor;
+    _triangleColor = UIColor.blackColor;
+    _boardColor = UIColor.blackColor;
+    
+    _minimumHorizontalSafeSpacing = 8;
+    _minimumVerticalSafeSpacing = 8;
   }
   return self;
 }
 
+#ifndef DISABLE_DTBUBBLETIPS_EXAMPLE
+
 + (DTBubbleTipsConfig *)exampleConfig {
   DTBubbleTipsConfig *config = self.new;
-  config.text = @"Welcome:)";
-  config.triangleOffset = 0.5;
-  config.triangleSize = CGSizeMake(20, 15);
-  
+  config.text = @"Welcome:)123 yeah this is very long cool who know 2022 kkkkkkkkkkkkkkkkkWelcome:)123 yeah this is very long cool who know 2022 kkkkkkkkkkkkkkkkk";
+  config.triangleSize = CGSizeMake(12, 6);
+  config.boardCornerRadius = 4;
+  config.orientation = DTBubbleTipsTriangleOrientationPointingDown;
+  config.dismissWhenTouchOutsideBubble = YES;
   return config;
 }
+
+#endif  // DISABLE_DTBUBBLETIPS_EXAMPLE
 
 @end

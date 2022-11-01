@@ -11,17 +11,29 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class DTBubbleTipsView;
+
+@protocol DTBubbleTipsViewDelegate <NSObject>
+@required
+
+- (void)tipsViewDidEndDisplay:(DTBubbleTipsView *)tipsView;
+
+@end
+
 @interface DTBubbleTipsView : UIView
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
-- (instancetype)initWithFrame:(CGRect)frame config:(DTBubbleTipsConfig *)config NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithConfig:(DTBubbleTipsConfig *)config
+                      delegate:(nullable id<DTBubbleTipsViewDelegate>)delegate NS_DESIGNATED_INITIALIZER;
 
 @property (nonatomic, strong, readonly) UILabel *label;
 @property (nonatomic, strong, readonly) UIImageView *board;
 @property (nonatomic, strong, readonly) UIImageView *triangle;
 
 @property (nonatomic, strong, readonly) DTBubbleTipsConfig *config;
+
+- (void)adjustPositionIfNeeded;
 
 @end
 

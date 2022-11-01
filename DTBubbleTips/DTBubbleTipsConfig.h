@@ -9,16 +9,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/* ********************************** *
- * Area Defination:                   *
- *                                    *
- *        /\  <- Triangle             *
- *  ------  -----------               *
- * |       Label       |  <- Board    *
- *  -------------------               *
- *                                    *
- * Triangle + Board = Bubble          *
- * ********************************** */
+/* *********************************** *
+ * Area Defination:                    *
+ *                                     *
+ *  ---------------------------------  *
+ * |             Screen              | *
+ * |                                 | *
+ * |                                 | *
+ * |            [PointedView]        | *
+ * |                /\  <- Triangle  | *
+ * |          ------  -----------    | *
+ * |         |       Label       |<->| *
+ * |          -------------------  ↑ | *
+ * |                               | | *
+ * |    minimumHorizontalSafeSpacing | *
+ * |---------------------------------| *
+ *     Triangle + Board = Bubble       *
+ * *********************************** */
 
 typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
   /// Triangle points up, the Board is below the Triangle, and the Bubble is below
@@ -47,46 +54,51 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 ///  centerX of the Triangle is 5 points from the loading of the Board.
 @property (nonatomic, assign) CGFloat triangleOffset;
 
+/// @brief The orientation of the Triangle.
 @property (nonatomic, assign) DTBubbleTipsTriangleOrientation orientation;
 
+/// @brief By default, if the orienration is `PointingUp' or `PointingDown', meanwhile
+/// The height of the Bubble is going to exceed the screen, the `orientation' will
+/// be adjusted to the "opposite side" so that it can be fully displayed in screen.
+/// To disable this default behaviour, just set this field to "NO".
+@property (nonatomic, assign) BOOL disableAutoAdjustOrientation;
+
 @property (nonatomic, assign) CGSize triangleSize;
-@property (nonatomic, assign) CGSize boardSize;
 
 /// @brief Margin of the label.
-@property (nonatomic, assign) UIEdgeInsets margin;
+@property (nonatomic, assign) UIEdgeInsets marginForLabel;
 
 /// @brief The maximum value of width. The text will be devided into multiple lines
 ///  if there were no enough horizontal space to display it correctly. Default to be
 ///  0, which means no constraint.
 @property (nonatomic, assign) CGFloat maximumWidth;
 
-/// @brief The minimum spacing in horizontal between the Board and the Screen.
-///  When the Board is too wide to be fully displayed in screen, the position of
-///  the Board will be adjusted towards left or right, correspondingly. This value
-///  makes sense when the adjustion occurs.
+@property (nonatomic, assign) CGFloat maximumHeight;
+
+/// @brief The minimum spacing in horizontal between the Bubble and the Screen.
+///  When the Bubble is too wide to be fully displayed in screen, the position of
+///  the Board will be adjusted towards left or right, correspondingly. Default to
+///  be 0, meaning limitted by screen bounds.
 @property (nonatomic, assign) CGFloat minimumHorizontalSafeSpacing;
+
+@property (nonatomic, assign) CGFloat minimumVerticalSafeSpacing;
 
 #pragma mark - Appearance
 
 /// @brief Text to be displayed on the Label.
 @property (nonatomic, copy) NSString *text;
 
+/// @brief Default to be system 14pt.
 @property (nonatomic, strong) UIFont *font;
 
-/// Default to be white.
+/// @brief Default to be white.
 @property (nonatomic, strong) UIColor *textColor;
 
-/// Default to be black.
+/// @brief Default to be black.
 @property (nonatomic, strong, nullable) UIColor *triangleColor;
 
-/// Default to be black.
+/// @brief Default to be black.
 @property (nonatomic, strong, nullable) UIColor *boardColor;
-
-///// Default to be black.
-//@property (nonatomic, strong) UIColor *borderColor;
-//
-///// Default to be 0.
-//@property (nonatomic, assign) CGFloat boarderWidth;
 
 /// @brief The filling image of the Triangle. If set, the `triangleColor`
 ///  will be ignored.
@@ -96,6 +108,7 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 ///  will be ignored.
 @property (nonatomic, strong, nullable) UIImage *boardImage;
 
+/// @brief Default to be 4.
 @property (nonatomic, assign) CGFloat boardCornerRadius;
 
 #pragma mark - Actions
@@ -110,6 +123,12 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 
 /// @brief Triggered when user touches on(inside) the Bubble.
 @property (nonatomic, copy, nullable) void(^touchOnBubbleCallback)(void);
+
+@end
+
+@interface DTBubbleTipsConfig (customized)
+
++ (DTBubbleTipsConfig *)exampleConfig;
 
 @end
 
