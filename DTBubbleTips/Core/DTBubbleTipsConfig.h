@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
  * |            [PointedView]        | *
  * |                /\  <- Triangle  | *
  * |          ------  -----------    | *
- * |         |       Label       |<->| *
+ * |         |       Board       |<->| *
  * |          -------------------  ↑ | *
  * |                               | | *
  * |    minimumHorizontalSafeSpacing | *
@@ -44,6 +44,9 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 
 @interface DTBubbleTipsConfig : NSObject
 
+/// @brief For subclass
+- (NSString *)contentViewClassName;
+
 #pragma mark - Layout & Alignment
 
 /// @brief The offset of the Triangle. It's considered as the horizontal distance
@@ -65,50 +68,52 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 
 @property (nonatomic, assign) CGSize triangleSize;
 
-/// @brief Margin of the label.
-@property (nonatomic, assign) UIEdgeInsets marginForLabel;
+/// @brief Margin of the contents.
+@property (nonatomic, assign) UIEdgeInsets contentsMargin;
 
-/// @brief The maximum value of width. The text will be devided into multiple lines
-///  if there were no enough horizontal space to display it correctly. Default to be
+/// @brief The Bubble's max width. The text will be devided into multiple lines
+///  if there were no enough horizontal space to display it correctly. Default to
 ///  0, which means no constraint.
+/// @note If the content is too large to satify both width and height constraint,
+///  the content would be clipped.
 @property (nonatomic, assign) CGFloat maximumWidth;
 
+/// @brief The Bubble's max height. The text will be devided into multiple lines
+///  if there were no enough horizontal space to display it correctly. Default to
+///  0, which means no constraint.
+/// @note If the content is too large to satify both width and height constraint,
+///  the content would be clipped. 
 @property (nonatomic, assign) CGFloat maximumHeight;
 
 /// @brief The minimum spacing in horizontal between the Bubble and the Screen.
 ///  When the Bubble is too wide to be fully displayed in screen, the position of
 ///  the Board will be adjusted towards left or right, correspondingly. Default to
-///  be 0, meaning limitted by screen bounds.
+///  0, meaning limitted by screen bounds.
 @property (nonatomic, assign) CGFloat minimumHorizontalSafeSpacing;
 
+/// @brief The minimum spacing in vertical between the Bubble and the Screen.
+///  When the Bubble is too wide to be fully displayed in screen, the position of
+///  the Board will be adjusted towards top or bottom, correspondingly. Default to
+///  0, meaning limitted by screen bounds.
 @property (nonatomic, assign) CGFloat minimumVerticalSafeSpacing;
 
 #pragma mark - Appearance
 
-/// @brief Text to be displayed on the Label.
-@property (nonatomic, copy) NSString *text;
-
-/// @brief Default to be system 14pt.
-@property (nonatomic, strong) UIFont *font;
-
-/// @brief Default to be white.
-@property (nonatomic, strong) UIColor *textColor;
-
 /// @brief Default to be black.
 @property (nonatomic, strong, nullable) UIColor *triangleColor;
-
-/// @brief Default to be black.
-@property (nonatomic, strong, nullable) UIColor *boardColor;
 
 /// @brief The filling image of the Triangle. If set, the `triangleColor`
 ///  will be ignored.
 @property (nonatomic, strong, nullable) UIImage *triangleImage;
 
+/// @brief Default to be black.
+@property (nonatomic, strong, nullable) UIColor *boardColor;
+
 /// @brief The filling image of the Board. If set, the `boardColor`
 ///  will be ignored.
 @property (nonatomic, strong, nullable) UIImage *boardImage;
 
-/// @brief Default to be 4.
+/// @brief Default to 4.
 @property (nonatomic, assign) CGFloat boardCornerRadius;
 
 #pragma mark - Actions
@@ -123,12 +128,6 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 
 /// @brief Triggered when user touches on(inside) the Bubble.
 @property (nonatomic, copy, nullable) void(^touchOnBubbleCallback)(void);
-
-@end
-
-@interface DTBubbleTipsConfig (customized)
-
-+ (DTBubbleTipsConfig *)exampleConfig;
 
 @end
 

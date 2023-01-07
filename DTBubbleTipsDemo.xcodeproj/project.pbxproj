@@ -20,7 +20,10 @@
 		00019C862869568D002DF8BB /* DTBubbleTipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00019C852869568D002DF8BB /* DTBubbleTipsView.m */; };
 		00019C892869569A002DF8BB /* DTBubbleTipsConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 00019C882869569A002DF8BB /* DTBubbleTipsConfig.m */; };
 		00019C8C286956C5002DF8BB /* DTBubbleTipsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 00019C8B286956C5002DF8BB /* DTBubbleTipsHelper.m */; };
+		0002FF4A294879880032DA43 /* DTBubbleTipsCommonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0002FF49294879880032DA43 /* DTBubbleTipsCommonView.m */; };
 		003B3EAD290778BB00828B77 /* DTBubbleTipsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 003B3EAC290778BB00828B77 /* DTBubbleTipsWindow.m */; };
+		003BBE722949728E00923EF8 /* DTBubbleTipsContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 003BBE712949728E00923EF8 /* DTBubbleTipsContentView.m */; };
+		003BBE7729497B2000923EF8 /* DTBubbleTipsCommonConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 003BBE7629497B2000923EF8 /* DTBubbleTipsCommonConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,8 +67,14 @@
 		00019C882869569A002DF8BB /* DTBubbleTipsConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsConfig.m; sourceTree = "<group>"; };
 		00019C8A286956C5002DF8BB /* DTBubbleTipsHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTBubbleTipsHelper.h; sourceTree = "<group>"; };
 		00019C8B286956C5002DF8BB /* DTBubbleTipsHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsHelper.m; sourceTree = "<group>"; };
+		0002FF48294879880032DA43 /* DTBubbleTipsCommonView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTBubbleTipsCommonView.h; sourceTree = "<group>"; };
+		0002FF49294879880032DA43 /* DTBubbleTipsCommonView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsCommonView.m; sourceTree = "<group>"; };
 		003B3EAB290778BB00828B77 /* DTBubbleTipsWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTBubbleTipsWindow.h; sourceTree = "<group>"; };
 		003B3EAC290778BB00828B77 /* DTBubbleTipsWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsWindow.m; sourceTree = "<group>"; };
+		003BBE702949728E00923EF8 /* DTBubbleTipsContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTBubbleTipsContentView.h; sourceTree = "<group>"; };
+		003BBE712949728E00923EF8 /* DTBubbleTipsContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsContentView.m; sourceTree = "<group>"; };
+		003BBE7529497B2000923EF8 /* DTBubbleTipsCommonConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTBubbleTipsCommonConfig.h; sourceTree = "<group>"; };
+		003BBE7629497B2000923EF8 /* DTBubbleTipsCommonConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsCommonConfig.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +161,34 @@
 		00019C81286955FD002DF8BB /* DTBubbleTips */ = {
 			isa = PBXGroup;
 			children = (
+				003BBE7829497B5500923EF8 /* Core */,
+				003BBE7329497AE400923EF8 /* Content */,
+			);
+			path = DTBubbleTips;
+			sourceTree = "<group>";
+		};
+		003BBE7329497AE400923EF8 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				003BBE7429497AF700923EF8 /* DefaultStyle */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		003BBE7429497AF700923EF8 /* DefaultStyle */ = {
+			isa = PBXGroup;
+			children = (
+				0002FF48294879880032DA43 /* DTBubbleTipsCommonView.h */,
+				0002FF49294879880032DA43 /* DTBubbleTipsCommonView.m */,
+				003BBE7529497B2000923EF8 /* DTBubbleTipsCommonConfig.h */,
+				003BBE7629497B2000923EF8 /* DTBubbleTipsCommonConfig.m */,
+			);
+			path = DefaultStyle;
+			sourceTree = "<group>";
+		};
+		003BBE7829497B5500923EF8 /* Core */ = {
+			isa = PBXGroup;
+			children = (
 				00019C842869568D002DF8BB /* DTBubbleTipsView.h */,
 				00019C852869568D002DF8BB /* DTBubbleTipsView.m */,
 				00019C872869569A002DF8BB /* DTBubbleTipsConfig.h */,
@@ -160,8 +197,10 @@
 				00019C8B286956C5002DF8BB /* DTBubbleTipsHelper.m */,
 				003B3EAB290778BB00828B77 /* DTBubbleTipsWindow.h */,
 				003B3EAC290778BB00828B77 /* DTBubbleTipsWindow.m */,
+				003BBE702949728E00923EF8 /* DTBubbleTipsContentView.h */,
+				003BBE712949728E00923EF8 /* DTBubbleTipsContentView.m */,
 			);
-			path = DTBubbleTips;
+			path = Core;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,13 +333,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				003BBE722949728E00923EF8 /* DTBubbleTipsContentView.m in Sources */,
 				00019C54286954AC002DF8BB /* ViewController.m in Sources */,
+				0002FF4A294879880032DA43 /* DTBubbleTipsCommonView.m in Sources */,
 				00019C892869569A002DF8BB /* DTBubbleTipsConfig.m in Sources */,
 				00019C4E286954AC002DF8BB /* AppDelegate.m in Sources */,
 				003B3EAD290778BB00828B77 /* DTBubbleTipsWindow.m in Sources */,
 				00019C862869568D002DF8BB /* DTBubbleTipsView.m in Sources */,
 				00019C5F286954AE002DF8BB /* main.m in Sources */,
 				00019C51286954AC002DF8BB /* SceneDelegate.m in Sources */,
+				003BBE7729497B2000923EF8 /* DTBubbleTipsCommonConfig.m in Sources */,
 				00019C8C286956C5002DF8BB /* DTBubbleTipsHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

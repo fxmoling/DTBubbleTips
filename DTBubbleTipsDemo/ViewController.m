@@ -35,9 +35,9 @@
   [button3 setTitle:@"good" forState:UIControlStateNormal];
   button3.backgroundColor = UIColor.grayColor;
   
-  [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsConfig.exampleConfig pointingToView:button spacing:3];
-  [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsConfig.exampleConfig pointingToView:button2 spacing:3];
-  [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsConfig.exampleConfig pointingToView:button3 spacing:3];
+  [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsCommonConfig.exampleConfig pointingToView:button spacing:3];
+  [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsCommonConfig.exampleConfig pointingToView:button2 spacing:3];
+  [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsCommonConfig.exampleConfig pointingToView:button3 spacing:3];
 }
 
 - (void)clickButton {

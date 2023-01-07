@@ -7,6 +7,9 @@
 
 #import "DTBubbleTipsView.h"
 
+#import "DTBubbleTipsConfig.h"
+#import "DTBubbleTipsContentView.h"
+
 @interface DTBubbleTipsView ()
 
 @property (nonatomic, weak) id<DTBubbleTipsViewDelegate> delegate;
@@ -18,16 +21,19 @@
 - (instancetype)initWithConfig:(DTBubbleTipsConfig *)config
                       delegate:(nullable id<DTBubbleTipsViewDelegate>)delegate {
   if (self = [super initWithFrame:CGRectZero]) {
-    _label = [[UILabel alloc] init];
     _board = [[UIImageView alloc] init];
     _triangle = [[UIImageView alloc] init];
-    _label.numberOfLines = 0;
+    
+    Class contentViewClass = NSClassFromString(config.contentViewClassName);
+    NSAssert([contentViewClass isSubclassOfClass:DTBubbleTipsContentView.class],
+             @"Bad contentViewClass name. class = %@", contentViewClass);
+    _contentView = [[contentViewClass alloc] initWithConfig:config];
     
     _delegate = delegate;
     
     [self addSubview:_board];
     [self addSubview:_triangle];
-    [_board addSubview:_label];
+    [_board addSubview:_contentView];
     
     _config = config;
     [self drawWithNewConfig];
@@ -46,7 +52,7 @@
 #pragma mark - Private
 
 - (void)setupUI {
-  [self layoutLabel];
+  [self layoutContentView];
   [self layoutBoard];
   [self layoutTriangle];
   
@@ -61,25 +67,24 @@
   }
 }
 
-- (void)layoutLabel {
-  CGFloat hotizontalMargin = self.config.marginForLabel.left + self.config.marginForLabel.right;
-  CGFloat verticalMargin = self.config.marginForLabel.top + self.config.marginForLabel.bottom;
-  CGSize labelMaxSize = CGSizeMake(self.maximumWidth - hotizontalMargin,
-                                   self.maximumHeight - verticalMargin);
-  CGSize labelSize = [self.label sizeThatFits:labelMaxSize];
+- (void)layoutContentView {
+  CGFloat hotizontalMargin = self.config.contentsMargin.left + self.config.contentsMargin.right;
+  CGFloat verticalMargin = self.config.contentsMargin.top + self.config.contentsMargin.bottom;
+  CGSize contentBoundSize = CGSizeMake(self.maximumWidth - hotizontalMargin,
+                                       self.maximumHeight - verticalMargin);
+  CGSize contentSize = [self.contentView layoutAndCalcSizeInBoundSize:contentBoundSize];
   
-  self.label.frame = CGRectMake(self.config.marginForLabel.left,
-                                self.config.marginForLabel.right,
-                                labelSize.width,
-                                labelSize.height);
+  self.contentView.frame = CGRectMake(self.config.contentsMargin.left,
+                                      self.config.contentsMargin.right,
+                                      contentSize.width,
+                                      contentSize.height);
 }
 
 - (void)layoutBoard {
-  CGSize labelSize = self.label.frame.size;
-  CGFloat width = labelSize.width + self.config.marginForLabel.left + self.config.marginForLabel.right;
-  CGFloat height = labelSize.height + self.config.marginForLabel.top + self.config.marginForLabel.bottom;
+  CGSize contentSize = self.contentView.frame.size;
+  CGFloat width = contentSize.width + self.config.contentsMargin.left + self.config.contentsMargin.right;
+  CGFloat height = contentSize.height + self.config.contentsMargin.top + self.config.contentsMargin.bottom;
   self.board.frame = CGRectMake(0, 0, width, height);
-  
   
   if (self.config.orientation == DTBubbleTipsTriangleOrientationPointingUp) {
     self.board.center = CGPointMake(width / 2, height / 2 + self.config.triangleSize.height);
@@ -142,14 +147,6 @@
 
 - (void)drawWithNewConfig {
   DTBubbleTipsConfig *config = self.config;
-  
-  UILabel *label = self.label;
-  label.text = config.text;
-  label.font = config.font;
-  label.textColor = config.textColor;
-  label.numberOfLines = 0;
-  label.lineBreakMode = NSLineBreakByWordWrapping;
-  label.textAlignment = NSTextAlignmentLeft;
   
   UIImageView *board = self.board;
   UIImageView *triangle = self.triangle;
@@ -216,6 +213,7 @@
 
 - (void)dismiss {
   self.hidden = YES;
+  [self.delegate tipsViewDidEndDisplay:self];
 }
 
 - (CGSize)boundSize {

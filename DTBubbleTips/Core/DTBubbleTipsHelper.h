@@ -5,8 +5,9 @@
 //  Created by aa on 2022/6/27.
 //
 
-#import "DTBubbleTipsConfig.h"
 #import "DTBubbleTipsView.h"
+
+#import "DTBubbleTipsCommonConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
