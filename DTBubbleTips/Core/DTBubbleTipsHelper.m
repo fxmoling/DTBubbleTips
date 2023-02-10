@@ -10,13 +10,11 @@
 #import "DTBubbleTipsWindow.h"
 #import "DTBubbleTipsAnimation.h"
 
-NSString * const DTBubbleTipsAppearAnimationKey = @"bubble_appear";
-NSString * const DTBubbleTipsDisappearAnimationKey = @"bubble_disappear";
-OBJC_EXTERN NSString * const DTBubbleTipsViewDidEndDisplayNotificationKey;
-
-@interface DTBubbleTipsHelper() <DTBubbleTipsViewDelegate, DTBubbleTipsWindowDelegate, CAAnimationDelegate>
+@interface DTBubbleTipsHelper() <DTBubbleTipsViewDelegate, DTBubbleTipsWindowDelegate>
 
 @property (nonatomic, strong, class, readonly) DTBubbleTipsWindow *window;
+
+// Used to play a delegate role.
 @property (nonatomic, strong, class, readonly) DTBubbleTipsHelper *eventHandler;
 
 @end
@@ -70,10 +68,10 @@ OBJC_EXTERN NSString * const DTBubbleTipsViewDidEndDisplayNotificationKey;
                                  spacing:(CGFloat)spacing {
   DTBubbleTipsView *bubble = [[DTBubbleTipsView alloc] initWithConfig:config delegate:self.eventHandler];
   DTBubbleTipsWindow *window = self.window;
-  [window addSubview:bubble];
   [window makeKeyAndVisible];
+  [window addSubview:bubble];
   
-  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.eventHandler action:@selector(onTipsViewClicked:)];
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.eventHandler action:@selector(didClickTipsView:)];
   [bubble addGestureRecognizer:tap];
   
   CGPoint originInpointedView = CGPointMake(pointedView.frame.size.width / 2 - bubble.triangle.center.x, pointedView.frame.size.height);
@@ -90,40 +88,27 @@ OBJC_EXTERN NSString * const DTBubbleTipsViewDidEndDisplayNotificationKey;
   } // TODO: horizontal
   
   [bubble adjustPositionIfNeeded];
-  [self startAnimationWithAnimatedView:bubble appear:YES];
+  [bubble animatedShow];
   return bubble;
 }
 
-+ (void)startAnimationWithAnimatedView:(DTBubbleTipsView *)animatedView appear:(BOOL)appear {
-  DTBubbleTipsAnimation *animationModel = appear ? animatedView.config.appearAnimation : animatedView.config.disappearAnimation;
-  NSString *animationKey = appear ? DTBubbleTipsAppearAnimationKey : DTBubbleTipsDisappearAnimationKey;
-  if (!animationModel) {
-    return;
-  }
-  CAAnimation *animation = [animationModel buildAnimationForView:animatedView];
-  animation.delegate = self.eventHandler;
-  [animatedView.layer addAnimation:animation forKey:animationKey];
-}
-
-+ (void)cancelAnimationOnView:(DTBubbleTipsView *)animatedView {
-  [animatedView.layer removeAnimationForKey:DTBubbleTipsAppearAnimationKey];
-  [animatedView.layer removeAnimationForKey:DTBubbleTipsDisappearAnimationKey];
-}
-
-- (void)onTipsViewClicked:(UITapGestureRecognizer *)tap {
+- (void)didClickTipsView:(UITapGestureRecognizer *)tap {
   DTBubbleTipsView *tipsView = (DTBubbleTipsView *)tap.view;
   NSAssert([tipsView isKindOfClass:DTBubbleTipsView.class], @"Illegal parameter");
   if (tipsView.config.dismissWhenTouchInsideBubble) {
-    [tipsView removeFromSuperview];
+    [self dismissTipsView:tipsView];
   }
   if (tipsView.config.touchOnBubbleCallback) {
     tipsView.config.touchOnBubbleCallback();
   }
 }
 
-#pragma mark - DTBubbleTipsViewDelegate Methods
+- (void)dismissTipsView:(DTBubbleTipsView *)tipsView {
+  [tipsView animatedDismiss];
+}
 
-- (void)tipsViewDidEndDisplay:(DTBubbleTipsView *)tipsView {
+- (void)tipsViewDidDisappear:(DTBubbleTipsView *)tipsView {
+  [tipsView removeFromSuperview];
   DTBubbleTipsWindow *window = DTBubbleTipsHelper.window;
   if (window.subviews.count == 0) {
     window.hidden = YES;

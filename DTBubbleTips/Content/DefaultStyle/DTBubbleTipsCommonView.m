@@ -84,6 +84,7 @@
 }
 
 - (void)closeButtonClicked:(UIButton *)closeButton {
+  [self.delegate dismissWithContentView:self];
   if (self.config.didClickCloseButton) {
     self.config.didClickCloseButton(closeButton);
   }

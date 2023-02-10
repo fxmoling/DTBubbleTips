@@ -9,10 +9,12 @@
 
 #import "DTBubbleTipsConfig.h"
 #import "DTBubbleTipsContentView.h"
+#import "DTBubbleTipsAnimation.h"
 
-@interface DTBubbleTipsView ()
+NSString * const DTBubbleTipsAppearAnimationKey = @"bubble_appear";
+NSString * const DTBubbleTipsDisappearAnimationKey = @"bubble_disappear";
 
-@property (nonatomic, weak) id<DTBubbleTipsViewDelegate> delegate;
+@interface DTBubbleTipsView () <DTBubbleTipsContentViewDelegate>
 
 @end
 
@@ -28,6 +30,7 @@
     NSAssert([contentViewClass isSubclassOfClass:DTBubbleTipsContentView.class],
              @"Bad contentViewClass name. class = %@", contentViewClass);
     _contentView = [[contentViewClass alloc] initWithConfig:config];
+    _contentView.delegate = self;
     
     _delegate = delegate;
     
@@ -39,8 +42,9 @@
     [self drawWithNewConfig];
     [self setupUI];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTouch)];
-    [self addGestureRecognizer:tap];
+    self.userInteractionEnabled = YES;
+    _board.userInteractionEnabled = YES;
+    _contentView.userInteractionEnabled = YES;
   }
   return self;
 }
@@ -201,19 +205,55 @@
   return trianglePath;
 }
 
-- (void)onTouch {
-  DTBubbleTipsConfig *config = self.config;
-  if (config.touchOnBubbleCallback) {
-    config.touchOnBubbleCallback();
+#pragma mark - Animation
+
+- (void)animatedShow {
+  DTBubbleTipsAnimation *animationModel = self.config.appearAnimation;
+  if (!animationModel) {
+    return;
   }
-  if (config.dismissWhenTouchInsideBubble) {
-    [self dismiss];
+  [CATransaction begin];
+  CAAnimation *animation = [animationModel buildAnimationForView:self];
+  __weak __typeof(self) weakSelf = self;
+  [CATransaction setCompletionBlock:^{
+    [weakSelf animationDidStop:YES];
+  }];
+  [self.layer addAnimation:animation forKey:DTBubbleTipsAppearAnimationKey];
+  [CATransaction commit];
+}
+
+- (void)animatedDismiss {
+  DTBubbleTipsAnimation *animationModel = self.config.disappearAnimation;
+  if (!animationModel) {
+    [self.delegate tipsViewDidDisappear:self];
+    return;
+  }
+  CAAnimation *animation = [animationModel buildAnimationForView:self];
+  __weak __typeof(self) weakSelf = self;
+  [CATransaction setCompletionBlock:^{
+    [weakSelf animationDidStop:NO];
+  }];
+  [self.layer addAnimation:animation forKey:DTBubbleTipsDisappearAnimationKey];
+  [CATransaction commit];
+}
+
+- (void)cancelAnimationOnView {
+  [self.layer removeAnimationForKey:DTBubbleTipsAppearAnimationKey];
+  [self.layer removeAnimationForKey:DTBubbleTipsDisappearAnimationKey];
+}
+
+// CAAnimationDelegate's `anim` is not what was added to layer, don't know why.
+// So use CATransaction instead.
+- (void)animationDidStop:(BOOL)appear {
+  if (!appear) {
+    [self.delegate tipsViewDidDisappear:self];
   }
 }
 
-- (void)dismiss {
-  self.hidden = YES;
-  [self.delegate tipsViewDidEndDisplay:self];
+#pragma mark - DTBubbleTipsContentViewDelegate Methods
+
+- (void)dismissWithContentView:(DTBubbleTipsContentView *)contentView {
+  [self animatedDismiss];
 }
 
 - (CGSize)boundSize {

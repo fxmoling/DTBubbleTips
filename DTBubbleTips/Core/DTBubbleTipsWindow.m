@@ -20,13 +20,22 @@
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  UIView *view = [super hitTest:point withEvent:event];
+  BOOL touchedOnTipsView = NO;
   for (UIView *tipsView in self.tipsViews) {
     if (CGRectContainsPoint(tipsView.frame, point)) {
-      return tipsView;
+      touchedOnTipsView = YES;
+      break;
     }
   }
-  [self.delegate didClickOnTipsWindow:self];
-  return nil;
+  if (!touchedOnTipsView) {
+    [self.delegate didClickOnTipsWindow:self];
+  }
+  return view;
+}
+
+- (void)addSubview:(UIView *)view {
+  [super addSubview:view];
 }
 
 @end

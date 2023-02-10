@@ -11,9 +11,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class DTBubbleTipsContentView;
+
+@protocol DTBubbleTipsContentViewDelegate <NSObject>
+@required
+
+- (void)dismissWithContentView:(DTBubbleTipsContentView *)contentView;
+
+@end
+
 @interface DTBubbleTipsContentView : UIView
 
 @property (nonatomic, strong, readonly) DTBubbleTipsConfig *config;
+@property (nonatomic, weak) id<DTBubbleTipsContentViewDelegate> delegate;
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;

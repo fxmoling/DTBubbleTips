@@ -43,7 +43,7 @@
   config.labelLeftSpacing = 12;
   config.labelRightSpacing = 12;
   
-  config.dismissWhenTouchInsideBubble = YES;
+//  config.dismissWhenTouchInsideBubble = YES;
   
   if (@available(iOS 13.0, *)) {
     config.image = [UIImage systemImageNamed:@"a.circle.fill"];
