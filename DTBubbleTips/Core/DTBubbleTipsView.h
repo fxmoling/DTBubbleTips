@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class DTBubbleTipsView;
 @class DTBubbleTipsConfig;
 @class DTBubbleTipsContentView;
+@class DTBubbleTipsAnimation;
 
 @protocol DTBubbleTipsViewDelegate <NSObject>
 @required

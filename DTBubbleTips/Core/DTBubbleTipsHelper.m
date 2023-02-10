@@ -8,10 +8,13 @@
 #import "DTBubbleTipsHelper.h"
 #import "DTBubbleTipsView.h"
 #import "DTBubbleTipsWindow.h"
+#import "DTBubbleTipsAnimation.h"
 
+NSString * const DTBubbleTipsAppearAnimationKey = @"bubble_appear";
+NSString * const DTBubbleTipsDisappearAnimationKey = @"bubble_disappear";
 OBJC_EXTERN NSString * const DTBubbleTipsViewDidEndDisplayNotificationKey;
 
-@interface DTBubbleTipsHelper() <DTBubbleTipsViewDelegate, DTBubbleTipsWindowDelegate>
+@interface DTBubbleTipsHelper() <DTBubbleTipsViewDelegate, DTBubbleTipsWindowDelegate, CAAnimationDelegate>
 
 @property (nonatomic, strong, class, readonly) DTBubbleTipsWindow *window;
 @property (nonatomic, strong, class, readonly) DTBubbleTipsHelper *eventHandler;
@@ -87,10 +90,29 @@ OBJC_EXTERN NSString * const DTBubbleTipsViewDidEndDisplayNotificationKey;
   } // TODO: horizontal
   
   [bubble adjustPositionIfNeeded];
+  [self startAnimationWithAnimatedView:bubble appear:YES];
   return bubble;
 }
 
-- (void)onTipsViewClicked:(DTBubbleTipsView *)tipsView {
++ (void)startAnimationWithAnimatedView:(DTBubbleTipsView *)animatedView appear:(BOOL)appear {
+  DTBubbleTipsAnimation *animationModel = appear ? animatedView.config.appearAnimation : animatedView.config.disappearAnimation;
+  NSString *animationKey = appear ? DTBubbleTipsAppearAnimationKey : DTBubbleTipsDisappearAnimationKey;
+  if (!animationModel) {
+    return;
+  }
+  CAAnimation *animation = [animationModel buildAnimationForView:animatedView];
+  animation.delegate = self.eventHandler;
+  [animatedView.layer addAnimation:animation forKey:animationKey];
+}
+
++ (void)cancelAnimationOnView:(DTBubbleTipsView *)animatedView {
+  [animatedView.layer removeAnimationForKey:DTBubbleTipsAppearAnimationKey];
+  [animatedView.layer removeAnimationForKey:DTBubbleTipsDisappearAnimationKey];
+}
+
+- (void)onTipsViewClicked:(UITapGestureRecognizer *)tap {
+  DTBubbleTipsView *tipsView = (DTBubbleTipsView *)tap.view;
+  NSAssert([tipsView isKindOfClass:DTBubbleTipsView.class], @"Illegal parameter");
   if (tipsView.config.dismissWhenTouchInsideBubble) {
     [tipsView removeFromSuperview];
   }

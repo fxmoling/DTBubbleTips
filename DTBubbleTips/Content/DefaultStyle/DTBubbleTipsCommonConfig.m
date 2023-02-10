@@ -6,6 +6,9 @@
 //
 
 #import "DTBubbleTipsCommonConfig.h"
+#import "DTBubbleTipsAnimation.h"
+#import "DTBubbleTipsScaleAnimation.h"
+#import "DTBubbleTipsAlphaAnimation.h"
 
 @implementation DTBubbleTipsCommonConfig
 
@@ -26,18 +29,21 @@
 
 + (DTBubbleTipsCommonConfig *)exampleConfig {
   DTBubbleTipsCommonConfig *config = self.new;
-  config.text = @"Try webpage translation here 如此美妙的开局💪🏻💪🏻💪🏻💪🏻💪🏻💪🏻💪🏻💪🏻💪🏻💪🏻💪🏻💪🏻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻好的嘻嘻";
-  config.triangleSize = CGSizeMake(16, 10);
-  config.boardCornerRadius = 8;
+  config.text = @"Try webpage translation here";
   config.orientation = DTBubbleTipsTriangleOrientationPointingDown;
-  config.dismissWhenTouchOutsideBubble = YES;
-  config.boardColor = UIColor.systemBlueColor;
-  config.triangleColor = UIColor.systemBlueColor;
+  
   config.maximumWidth = 230;
+  config.boardCornerRadius = 8;
+  config.boardColor = UIColor.systemBlueColor;
+  
+  config.triangleSize = CGSizeMake(16, 10);
+  config.triangleColor = UIColor.systemBlueColor;
   
   config.contentsMargin = UIEdgeInsetsMake(12, 12, 12, 12);
   config.labelLeftSpacing = 12;
   config.labelRightSpacing = 12;
+  
+  config.dismissWhenTouchInsideBubble = YES;
   
   if (@available(iOS 13.0, *)) {
     config.image = [UIImage systemImageNamed:@"a.circle.fill"];
@@ -49,6 +55,21 @@
     config.closeButtonTintColor = UIColor.whiteColor;
     config.closeButtonImageSize = CGSizeMake(16, 16);
   }
+  
+  DTBubbleTipsScaleAnimation *appearAnimation = [[DTBubbleTipsScaleAnimation alloc] init];
+  appearAnimation.duration = 0.25;
+  appearAnimation.fromScale = 0;
+  appearAnimation.toScale = 1;
+  appearAnimation.timingFunctionName = @"easeOut";
+  appearAnimation.centralPoint = CGPointMake(0.5, 1);
+  config.appearAnimation = appearAnimation;
+  
+  DTBubbleTipsAlphaAnimation *disappearAnimation = [[DTBubbleTipsAlphaAnimation alloc] init];
+  disappearAnimation.duration = 0.25;
+  disappearAnimation.fromAlpha = 1;
+  disappearAnimation.toAlpha = 0;
+  disappearAnimation.timingFunctionName = @"easeOut";
+  config.disappearAnimation = disappearAnimation;
   
   return config;
 }

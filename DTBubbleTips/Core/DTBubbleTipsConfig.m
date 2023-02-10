@@ -29,4 +29,8 @@
   return self;
 }
 
+- (NSString *)contentViewClassName {
+  return @"";
+}
+
 @end

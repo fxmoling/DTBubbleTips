@@ -9,6 +9,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class DTBubbleTipsAnimation;
+
 /* *********************************** *
  * Area Defination:                    *
  *                                     *
@@ -43,9 +45,6 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 };
 
 @interface DTBubbleTipsConfig : NSObject
-
-/// @brief For subclass
-- (NSString *)contentViewClassName;
 
 #pragma mark - Layout & Alignment
 
@@ -116,6 +115,11 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 /// @brief Default to 4.
 @property (nonatomic, assign) CGFloat boardCornerRadius;
 
+#pragma mark - Animation
+
+@property (nonatomic, strong) DTBubbleTipsAnimation *appearAnimation;
+@property (nonatomic, strong) DTBubbleTipsAnimation *disappearAnimation;
+
 #pragma mark - Actions
 
 /// @brief If YES, when user touches inside the Bubble, the Bubble will dismiss
@@ -128,6 +132,9 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 
 /// @brief Triggered when user touches on(inside) the Bubble.
 @property (nonatomic, copy, nullable) void(^touchOnBubbleCallback)(void);
+
+/// @brief For subclass
+- (NSString *)contentViewClassName;
 
 @end
 

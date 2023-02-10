@@ -24,6 +24,9 @@
 		003B3EAD290778BB00828B77 /* DTBubbleTipsWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 003B3EAC290778BB00828B77 /* DTBubbleTipsWindow.m */; };
 		003BBE722949728E00923EF8 /* DTBubbleTipsContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 003BBE712949728E00923EF8 /* DTBubbleTipsContentView.m */; };
 		003BBE7729497B2000923EF8 /* DTBubbleTipsCommonConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 003BBE7629497B2000923EF8 /* DTBubbleTipsCommonConfig.m */; };
+		0059457C296BE90200B78495 /* DTBubbleTipsAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0059457B296BE90200B78495 /* DTBubbleTipsAnimation.m */; };
+		0059458C296C537D00B78495 /* DTBubbleTipsScaleAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0059458B296C537D00B78495 /* DTBubbleTipsScaleAnimation.m */; };
+		00A04A632994DF6C00D379BF /* DTBubbleTipsAlphaAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A04A622994DF6C00D379BF /* DTBubbleTipsAlphaAnimation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +78,12 @@
 		003BBE712949728E00923EF8 /* DTBubbleTipsContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsContentView.m; sourceTree = "<group>"; };
 		003BBE7529497B2000923EF8 /* DTBubbleTipsCommonConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTBubbleTipsCommonConfig.h; sourceTree = "<group>"; };
 		003BBE7629497B2000923EF8 /* DTBubbleTipsCommonConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsCommonConfig.m; sourceTree = "<group>"; };
+		0059457A296BE90200B78495 /* DTBubbleTipsAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTBubbleTipsAnimation.h; sourceTree = "<group>"; };
+		0059457B296BE90200B78495 /* DTBubbleTipsAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsAnimation.m; sourceTree = "<group>"; };
+		0059458A296C537D00B78495 /* DTBubbleTipsScaleAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTBubbleTipsScaleAnimation.h; sourceTree = "<group>"; };
+		0059458B296C537D00B78495 /* DTBubbleTipsScaleAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsScaleAnimation.m; sourceTree = "<group>"; };
+		00A04A612994DF6C00D379BF /* DTBubbleTipsAlphaAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTBubbleTipsAlphaAnimation.h; sourceTree = "<group>"; };
+		00A04A622994DF6C00D379BF /* DTBubbleTipsAlphaAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTBubbleTipsAlphaAnimation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,8 +208,22 @@
 				003B3EAC290778BB00828B77 /* DTBubbleTipsWindow.m */,
 				003BBE702949728E00923EF8 /* DTBubbleTipsContentView.h */,
 				003BBE712949728E00923EF8 /* DTBubbleTipsContentView.m */,
+				00594584296C016900B78495 /* Animation */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		00594584296C016900B78495 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				0059457A296BE90200B78495 /* DTBubbleTipsAnimation.h */,
+				0059457B296BE90200B78495 /* DTBubbleTipsAnimation.m */,
+				0059458A296C537D00B78495 /* DTBubbleTipsScaleAnimation.h */,
+				0059458B296C537D00B78495 /* DTBubbleTipsScaleAnimation.m */,
+				00A04A612994DF6C00D379BF /* DTBubbleTipsAlphaAnimation.h */,
+				00A04A622994DF6C00D379BF /* DTBubbleTipsAlphaAnimation.m */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,7 +358,10 @@
 			files = (
 				003BBE722949728E00923EF8 /* DTBubbleTipsContentView.m in Sources */,
 				00019C54286954AC002DF8BB /* ViewController.m in Sources */,
+				0059457C296BE90200B78495 /* DTBubbleTipsAnimation.m in Sources */,
 				0002FF4A294879880032DA43 /* DTBubbleTipsCommonView.m in Sources */,
+				0059458C296C537D00B78495 /* DTBubbleTipsScaleAnimation.m in Sources */,
+				00A04A632994DF6C00D379BF /* DTBubbleTipsAlphaAnimation.m in Sources */,
 				00019C892869569A002DF8BB /* DTBubbleTipsConfig.m in Sources */,
 				00019C4E286954AC002DF8BB /* AppDelegate.m in Sources */,
 				003B3EAD290778BB00828B77 /* DTBubbleTipsWindow.m in Sources */,
