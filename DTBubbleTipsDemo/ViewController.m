@@ -18,12 +18,15 @@
   [super viewDidLoad];
   // Do any additional setup after loading the view.
   
+  UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickBackground)];
+  [self.view addGestureRecognizer:tap];
+  
   UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
   [self.view addSubview:button];
   [button setTitle:@"good" forState:UIControlStateNormal];
   button.backgroundColor = UIColor.grayColor;
   
-  [button addTarget:self action:@selector(clickButton) forControlEvents:UIControlEventTouchUpInside];
+  [button addTarget:self action:@selector(clickButton1) forControlEvents:UIControlEventTouchUpInside];
   
   UIButton *button2 = [[UIButton alloc] initWithFrame:CGRectMake(250, 250, 100, 100)];
   [self.view addSubview:button2];
@@ -35,14 +38,19 @@
   [button3 setTitle:@"good" forState:UIControlStateNormal];
   button3.backgroundColor = UIColor.grayColor;
   
-  [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsCommonConfig.exampleConfig pointingToView:button spacing:3];
-  [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsCommonConfig.exampleConfig pointingToView:button2 spacing:3];
-  [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsCommonConfig.exampleConfig pointingToView:button3 spacing:3];
+  DTBubbleTipsView *tipsView = [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsCommonConfig.exampleConfig onView:button pointingToView:button];
+  tipsView.userInteractionEnabled = YES;
+  
+  [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsCommonConfig.exampleConfig onView:self.view pointingToView:button2];
+  [DTBubbleTipsHelper showTipsWithConfig:DTBubbleTipsCommonConfig.exampleConfig onView:nil pointingToView:button3];
 }
 
-- (void)clickButton {
-  NSLog(@"123");
+- (void)clickButton1 {
+  NSLog(@"111 Click button 1.");
 }
 
+- (void)clickBackground {
+  NSLog(@"Click background.");
+}
 
 @end

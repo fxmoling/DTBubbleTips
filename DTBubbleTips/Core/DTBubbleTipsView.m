@@ -171,6 +171,17 @@ NSString * const DTBubbleTipsDisappearAnimationKey = @"bubble_disappear";
     triangle.backgroundColor = config.triangleColor;
     triangle.layer.mask = triangleMaskLayer;
   }
+  
+  [self drawShadow];
+}
+
+- (void)drawShadow {
+  CALayer *layer = self.layer;
+  DTBubbleTipsConfig *config = self.config;
+  layer.shadowColor = config.shadowColor.CGColor;
+  layer.shadowOffset = config.shadowOffset;
+  layer.shadowRadius = config.shadowRadius;
+  layer.shadowOpacity = config.shadowOpacity;
 }
 
 - (UIBezierPath *)triangleBezierPath {
@@ -242,8 +253,8 @@ NSString * const DTBubbleTipsDisappearAnimationKey = @"bubble_disappear";
   [self.layer removeAnimationForKey:DTBubbleTipsDisappearAnimationKey];
 }
 
-// CAAnimationDelegate's `anim` is not what was added to layer, don't know why.
-// So use CATransaction instead.
+// CAAnimationDelegate's `anim` is a deep copy of the animation added to layer.
+// So use CATransaction to invoke the animation's completion callback.
 - (void)animationDidStop:(BOOL)appear {
   if (!appear) {
     [self.delegate tipsViewDidDisappear:self];

@@ -21,17 +21,14 @@
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
   UIView *view = [super hitTest:point withEvent:event];
-  BOOL touchedOnTipsView = NO;
   for (UIView *tipsView in self.tipsViews) {
     if (CGRectContainsPoint(tipsView.frame, point)) {
-      touchedOnTipsView = YES;
-      break;
+      return view;
     }
   }
-  if (!touchedOnTipsView) {
-    [self.delegate didClickOnTipsWindow:self];
-  }
-  return view;
+  [self.delegate didClickOnTipsWindow:self];
+  // Do not intercept the gesture.
+  return nil;
 }
 
 - (void)addSubview:(UIView *)view {

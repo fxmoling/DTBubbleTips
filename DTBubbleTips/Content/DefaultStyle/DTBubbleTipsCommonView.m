@@ -6,6 +6,7 @@
 //
 
 #import "DTBubbleTipsCommonView.h"
+#import "DTBubbleTipsButton.h"
 
 @implementation DTBubbleTipsCommonView
 
@@ -26,9 +27,10 @@
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     _imageView = imageView;
     
-    UIButton *closeButton = [[UIButton alloc] init];
+    DTBubbleTipsButton *closeButton = [[DTBubbleTipsButton alloc] init];
     [self addSubview:closeButton];
     [closeButton addTarget:self action:@selector(closeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    closeButton.expandedHotAreaSize = config.closeButtonExpandedHotAreaSize;
     _closeButton = closeButton;
   }
   return self;
@@ -60,15 +62,13 @@
   }
   
   CGSize closeButtonSize = config.closeButtonImageSize;
-  UIEdgeInsets closeButtonInsets = config.closeButtonExpandedHotArea;
   UIButton *closeButton = self.closeButton;
   if (config.closeButtonImage && closeButtonSize.width > 0 && closeButtonSize.height > 0) {
     [closeButton setImage:config.closeButtonImage forState:UIControlStateNormal];
     closeButton.tintColor = config.closeButtonTintColor;
-    closeButton.contentEdgeInsets = closeButtonInsets;
     closeButton.frame = CGRectMake(0, 0, closeButtonSize.width, closeButtonSize.height);
     labelMaxWidth -= imageSize.width + config.labelRightSpacing;
-    contentSize.height = MAX(contentSize.height, closeButtonSize.height + closeButtonInsets.top + closeButtonInsets.bottom);
+    contentSize.height = MAX(contentSize.height, closeButtonSize.height);
     rightWidth = closeButtonSize.width + config.labelRightSpacing;
   }
   
@@ -84,7 +84,9 @@
 }
 
 - (void)closeButtonClicked:(UIButton *)closeButton {
-  [self.delegate dismissWithContentView:self];
+  if (self.config.dismissWhenClickCloseButton) {
+    [self.delegate dismissWithContentView:self];
+  }
   if (self.config.didClickCloseButton) {
     self.config.didClickCloseButton(closeButton);
   }

@@ -59,6 +59,10 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 /// @brief The orientation of the Triangle.
 @property (nonatomic, assign) DTBubbleTipsTriangleOrientation orientation;
 
+/// @brief The spacing between the triangle and the pointed view. Default to be
+///  3.
+@property(nonatomic, assign) CGFloat spacingToPointedView;
+
 /// @brief By default, if the orienration is `PointingUp' or `PointingDown', meanwhile
 /// The height of the Bubble is going to exceed the screen, the `orientation' will
 /// be adjusted to the "opposite side" so that it can be fully displayed in screen.
@@ -115,6 +119,14 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 /// @brief Default to 4.
 @property (nonatomic, assign) CGFloat boardCornerRadius;
 
+#pragma mark - Shadow
+
+/// @note The following shadow properties are the same as the corresponding properties in CALayer.
+@property (nonatomic, strong) UIColor *shadowColor;
+@property (nonatomic, assign) CGSize shadowOffset;
+@property (nonatomic, assign) CGFloat shadowRadius;
+@property (nonatomic, assign) CGFloat shadowOpacity;
+
 #pragma mark - Animation
 
 @property (nonatomic, strong) DTBubbleTipsAnimation *appearAnimation;
@@ -126,12 +138,23 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 ///  immediately.
 @property (nonatomic, assign) BOOL dismissWhenTouchInsideBubble;
 
+
+
 /// @brief If YES, when user touches outside the Bubble, the Bubble will dismiss
 ///  immediately.
 @property (nonatomic, assign) BOOL dismissWhenTouchOutsideBubble;
 
 /// @brief Triggered when user touches on(inside) the Bubble.
 @property (nonatomic, copy, nullable) void(^touchOnBubbleCallback)(void);
+
+/// @brief Trigger when bubble is dismissed by one of the following actions:
+/// - Bubble clicked and `dismissWhenTouchInsideBubble` is `YES`.
+/// - Mask window clicked and `dismissWhenTouchOutsideBubble` is `YES`.
+/// - Close button clicked (If exists and is enabled).
+/// - [unimplemented] The display time ends.
+/// @note If you call the `removeFromSuperview` manually or set the view's `hidden`
+///  to `YES` or set it's alpha to 0, this callback will NOT be triggered.
+@property (nonatomic, copy, nullable) void(^bubbleDisappearCallback)(void);
 
 /// @brief For subclass
 - (NSString *)contentViewClassName;

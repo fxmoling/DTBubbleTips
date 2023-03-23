@@ -17,6 +17,8 @@
     _triangleOffset = 0.5;
     _contentsMargin = UIEdgeInsetsMake(8, 8, 8, 8);
     
+    _spacingToPointedView = 3;
+    
     _triangleSize = CGSizeMake(12, 6);
     _boardCornerRadius = 4;
     

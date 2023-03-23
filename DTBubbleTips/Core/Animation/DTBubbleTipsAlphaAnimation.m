@@ -17,7 +17,7 @@
   alphaAnimation.timingFunction = self.timingFunction;
   alphaAnimation.beginTime = self.beginTime;
   alphaAnimation.removedOnCompletion = NO;
-  alphaAnimation.fillMode = kCAFillModeBackwards;
+  alphaAnimation.fillMode = kCAFillModeForwards;
   return alphaAnimation;
 }
 

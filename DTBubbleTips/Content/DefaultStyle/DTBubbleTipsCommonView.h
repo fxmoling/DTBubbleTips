@@ -8,6 +8,8 @@
 #import "DTBubbleTipsContentView.h"
 #import "DTBubbleTipsCommonConfig.h"
 
+@class DTBubbleTipsButton;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DTBubbleTipsCommonView : DTBubbleTipsContentView
@@ -16,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, readonly) UIImageView *imageView;
 @property (nonatomic, strong, readonly) UILabel *label;
-@property (nonatomic, strong, readonly) UIButton *closeButton;
+@property (nonatomic, strong, readonly) DTBubbleTipsButton *closeButton;
 
 - (instancetype)initWithConfig:(DTBubbleTipsCommonConfig *)config NS_DESIGNATED_INITIALIZER;
 

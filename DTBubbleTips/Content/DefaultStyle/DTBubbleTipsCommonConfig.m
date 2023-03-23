@@ -43,7 +43,13 @@
   config.labelLeftSpacing = 12;
   config.labelRightSpacing = 12;
   
-//  config.dismissWhenTouchInsideBubble = YES;
+  config.shadowColor = UIColor.blackColor;
+  config.shadowRadius = 5;
+  config.shadowOpacity = 0.35;
+  config.shadowOffset = CGSizeMake(5, 5);
+  
+  config.dismissWhenTouchInsideBubble = YES;
+  config.dismissWhenTouchOutsideBubble = YES;
   
   if (@available(iOS 13.0, *)) {
     config.image = [UIImage systemImageNamed:@"a.circle.fill"];
@@ -70,6 +76,8 @@
   disappearAnimation.toAlpha = 0;
   disappearAnimation.timingFunctionName = @"easeOut";
   config.disappearAnimation = disappearAnimation;
+  
+  config.closeButtonExpandedHotAreaSize = CGSizeMake(10, 10);
   
   return config;
 }

@@ -52,8 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGSize closeButtonImageSize;
 
 /// @brief Allow user to expand the hot area of close button.
-/// @note Actually be button's contentEdgeInsets.
-@property (nonatomic, assign) UIEdgeInsets closeButtonExpandedHotArea;
+@property (nonatomic, assign) CGSize closeButtonExpandedHotAreaSize;
 
 @property (nonatomic, strong, nullable) void(^didClickCloseButton)(UIButton *closeButton);
 

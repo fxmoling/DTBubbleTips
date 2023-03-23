@@ -29,7 +29,7 @@
   scaleAnimation.toValue = @(self.toScale);
   scaleAnimation.beginTime = self.beginTime;
   scaleAnimation.removedOnCompletion = NO;
-  scaleAnimation.fillMode = kCAFillModeBackwards;
+  scaleAnimation.fillMode = kCAFillModeForwards;
   
   CGPoint position = view.layer.position;
   CGPoint offset = CGPointMake((self.centralPoint.x - 0.5) * width, (self.centralPoint.y - 0.5) * height);
@@ -39,7 +39,7 @@
   positionAnimation.toValue = [NSValue valueWithCGPoint:position];
   positionAnimation.beginTime = self.beginTime;
   positionAnimation.removedOnCompletion = NO;
-  positionAnimation.fillMode = kCAFillModeBackwards;
+  positionAnimation.fillMode = kCAFillModeForwards;
   
   group.animations = @[ scaleAnimation, positionAnimation ];
   
