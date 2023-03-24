@@ -28,6 +28,10 @@
   
   [button addTarget:self action:@selector(clickButton1) forControlEvents:UIControlEventTouchUpInside];
   
+  UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap2Button1)];
+  tap2.numberOfTapsRequired = 2;
+  [button addGestureRecognizer:tap2];
+  
   UIButton *button2 = [[UIButton alloc] initWithFrame:CGRectMake(250, 250, 100, 100)];
   [self.view addSubview:button2];
   [button2 setTitle:@"good" forState:UIControlStateNormal];
@@ -51,6 +55,10 @@
 
 - (void)clickBackground {
   NSLog(@"Click background.");
+}
+
+- (void)tap2Button1 {
+  NSLog(@"Tap 2 on button 1.");
 }
 
 @end

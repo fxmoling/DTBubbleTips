@@ -50,6 +50,7 @@
   
   config.dismissWhenTouchInsideBubble = YES;
   config.dismissWhenTouchOutsideBubble = YES;
+  config.clickableWhenOverflowFromSuperview = YES;
   
   if (@available(iOS 13.0, *)) {
     config.image = [UIImage systemImageNamed:@"a.circle.fill"];

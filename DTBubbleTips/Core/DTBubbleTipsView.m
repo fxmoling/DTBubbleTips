@@ -10,6 +10,7 @@
 #import "DTBubbleTipsConfig.h"
 #import "DTBubbleTipsContentView.h"
 #import "DTBubbleTipsAnimation.h"
+#import "UIView+DTBubbleTips.h"
 
 NSString * const DTBubbleTipsAppearAnimationKey = @"bubble_appear";
 NSString * const DTBubbleTipsDisappearAnimationKey = @"bubble_disappear";
@@ -296,6 +297,18 @@ NSString * const DTBubbleTipsDisappearAnimationKey = @"bubble_disappear";
 - (BOOL)isVertical {
   return self.config.orientation == DTBubbleTipsTriangleOrientationPointingUp
     || self.config.orientation == DTBubbleTipsTriangleOrientationPointingDown;
+}
+
+#pragma mark - Override
+
+- (void)didMoveToSuperview {
+  [super didMoveToSuperview];
+  [self.superview dt_appendBubbleTipsView:self];
+}
+
+- (void)removeFromSuperview {
+  [self.superview dt_removeBubbleTipsView:self];
+  [super removeFromSuperview];
 }
 
 @end

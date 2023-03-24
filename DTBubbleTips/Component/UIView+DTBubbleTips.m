@@ -8,63 +8,72 @@
 #import "UIView+DTBubbleTips.h"
 #import <objc/runtime.h>
 #import "DTBubbleTipsView.h"
-
-// 暂时想法:
-// 加一个flag，标记是否需要expand
-// 加一个弱引用数组，指向所有tipsView
-// 重写pointInside，把点到tipsView里的也给insede了
-// 重写hitTest，以防触发view本身的事件。比如UIButton，把事件在这里拦截
-// 事件dispatch到tipsView
+#import "DTBubbleTipsConfig.h"
 
 @implementation UIView (DTBubbleTips)
 
 + (void)load {
-  SEL pointInsideSel = @selector(pointInside:withEvent:);
-  SEL pointInsideNewSel = @selector(dt_pointInside:withEvent:);
-  Method pointInsideMethod = class_getInstanceMethod(self, pointInsideSel);
-  Method pointInsideNewMethod = class_getInstanceMethod(self, pointInsideNewSel);
-  method_exchangeImplementations(pointInsideMethod, pointInsideNewMethod);
+  [self dt_swizzleSel1:@selector(pointInside:withEvent:) sel2:@selector(dt_pointInside:withEvent:)];
 }
 
++ (void)dt_swizzleSel1:(SEL)sel1 sel2:(SEL)sel2 {
+  Method method1 = class_getInstanceMethod(self, sel1);
+  Method method2 = class_getInstanceMethod(self, sel2);
+  method_exchangeImplementations(method1, method2);
+}
+
+#pragma mark - Public
+
+- (void)dt_appendBubbleTipsView:(DTBubbleTipsView *)tipsView {
+  NSPointerArray *views = [self dt_bubbleTipsViewList];
+  [views addPointer:(__bridge void * _Nullable)(tipsView)];
+  [self dt_clearInvalidTipsView:views];
+  [self dt_setBubbleTipsViewList:views];
+}
+
+- (void)dt_removeBubbleTipsView:(DTBubbleTipsView *)tipsView {
+  NSPointerArray *views = [self dt_bubbleTipsViewList];
+  for (NSInteger i = 0; i < views.count; i++) {
+    if ((DTBubbleTipsView *)[views pointerAtIndex:i] == tipsView) {
+      [views removePointerAtIndex:i];
+      break;
+    }
+  }
+}
+
+#pragma mark - Private
+
 - (BOOL)dt_pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-  if ([self dt_pointInside:point withEvent:event] || ![self dt_expandInteractableArea]) {
+  if ([self dt_pointInside:point withEvent:event]) {
     return YES;
   }
+  if (event.allTouches.count > 1) {
+    return NO;
+  }
   for (DTBubbleTipsView *view in [self dt_bubbleTipsViewList]) {
-    // TODO: filter flag
-    if (!view || view.hidden || view.alpha < 0.01 || view.superview != self || !view.userInteractionEnabled) {
+    if (!view || view.hidden || view.alpha <= 0.01 || view.superview != self
+        || !view.userInteractionEnabled || !view.config.clickableWhenOverflowFromSuperview) {
       continue;
     }
     if (CGRectContainsPoint(view.frame, point)) {
+      // Fail the gestures in the hostView. Tapping on the overflowed tipsView should only trigger itself's
+      // touch event.
+      for (UIGestureRecognizer *ges in self.gestureRecognizers) {
+        [ges setState:UIGestureRecognizerStateFailed];
+      }
       return YES;
     }
   }
   return NO;
 }
 
-- (void)dt_setExpandInteractableArea:(BOOL)expand {
-  objc_setAssociatedObject(self, @selector(dt_expandInteractableArea), @(expand), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)dt_expandInteractableArea {
-  return [objc_getAssociatedObject(self, _cmd) boolValue];
-}
-
-- (void)dt_appendBubbleTipsView:(DTBubbleTipsView *)tipsView {
-  NSPointerArray *views = [self dt_bubbleTipsViewList];
-  [views addPointer:(__bridge void * _Nullable)(tipsView)];
-  [self dt_clearInvalidTipsView:views];
-  [self dt_updateExpandInteractableArea];
-  [self dt_setBubbleTipsViewList:views];
-}
-
 - (void)dt_clearInvalidTipsView:(NSPointerArray *)views {
-  [views addPointer:NULL];
-  [views compact];
-}
-
-- (void)dt_updateExpandInteractableArea {
-  
+  for (NSInteger i = views.count - 1; i >= 0; i--) {
+    UIView *view = [views pointerAtIndex:i];
+    if (!view || view.superview != self) {
+      [views removePointerAtIndex:i];
+    }
+  }
 }
 
 - (void)dt_setBubbleTipsViewList:(NSPointerArray *)list {
@@ -74,6 +83,5 @@
 - (NSPointerArray *)dt_bubbleTipsViewList {
   return objc_getAssociatedObject(self, _cmd) ?: [NSPointerArray weakObjectsPointerArray];
 }
-
 
 @end

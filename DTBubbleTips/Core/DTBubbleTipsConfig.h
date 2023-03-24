@@ -134,14 +134,16 @@ typedef NS_ENUM(NSUInteger, DTBubbleTipsTriangleOrientation) {
 
 #pragma mark - Actions
 
-/// @brief If YES, when user touches inside the Bubble, the Bubble will dismiss
-///  immediately.
+/// @brief If YES, when user tap inside the Bubble, the Bubble will dismiss.
 @property (nonatomic, assign) BOOL dismissWhenTouchInsideBubble;
 
-
+/// @brief If YES, the tipsView can receive gesture even it overflows the superview.
+@property (nonatomic, assign) BOOL clickableWhenOverflowFromSuperview;
 
 /// @brief If YES, when user touches outside the Bubble, the Bubble will dismiss
-///  immediately.
+///  immediately. Only working when the `hostView` is `nil`.
+/// @note When the `hostView` is `nil`, the tipsView will be added to a window by default.
+///  The window's `hitTest` is overwritten to dismiss the tipsView when user touches on it.
 @property (nonatomic, assign) BOOL dismissWhenTouchOutsideBubble;
 
 /// @brief Triggered when user touches on(inside) the Bubble.

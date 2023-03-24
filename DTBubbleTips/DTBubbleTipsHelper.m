@@ -74,7 +74,6 @@
     hostView = window;
   }
   [hostView addSubview:bubble];
-  [hostView dt_appendBubbleTipsView:bubble];
   
   UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.eventHandler action:@selector(didClickTipsView:)];
   [bubble addGestureRecognizer:tap];

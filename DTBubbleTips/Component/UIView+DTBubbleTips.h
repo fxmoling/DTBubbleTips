@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIView (DTBubbleTips)
 
 - (void)dt_appendBubbleTipsView:(DTBubbleTipsView *)tipsView;
+- (void)dt_removeBubbleTipsView:(DTBubbleTipsView *)tipsView;
 
 @end
 
